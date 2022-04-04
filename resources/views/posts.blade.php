@@ -42,16 +42,39 @@
         </form>
     </div>
     <!-- 全ての投稿リスト -->
-    
-@endsection
-git fetch
+@if (count($posts) > 0)
+        <div class="card-body">
+            <div class="card-body">
+                <table class="table table-striped task-table">
+                    <!-- テーブルヘッダ -->
+                    <thead>
+                        <th>投稿一覧</th>
+                        <th>&nbsp;</th>
+                    </thead>
+                    <!-- テーブル本体 -->
+                    <tbody>
+                        @foreach ($posts as $post)
+                            <tr>
+                                <td class="table-text">
+                                    <div>{{ $post->img_url }}</div>
+                                </td>
+                                <!-- 投稿タイトル -->
+                                <td class="table-text">
+                                    <div>{{ $post->post_title }}</div>
+                                </td>
+                                 <!-- 投稿詳細 -->
+                                <td class="table-text">
+                                    <div>{{ $post->post_desc }}</div>
+                                </td>
+                                 <!--名前 -->
+                                <td class="table-text">
                                    <div>{{ $post->user->name }}</div>
                                 </td>
+                                <!-- 詳細ボタン -->
                                 <td class="table-text">
-                                    <div></div>
+                                   <a href="{{ route('show', ['id'=>$post->user_id]) }}" class="btn btn-primary">詳細</a>
                                 </td>
-                               <td><a href="{{ route('show', ['id'=>$post->id]) }}" class="btn btn-primary">詳細</a></td>
- 				<!-- お気に入りボタン -->
+ 				                <!-- お気に入りボタン -->
                                 <td class="table-text">
                                     <form action="{{ url('post/'.$post->id) }}" method="POST">
                                     	{{ csrf_field() }}
