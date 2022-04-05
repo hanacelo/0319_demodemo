@@ -29,7 +29,9 @@
         
             <div class="form-group">
                 画像の選択
-                <input id="fileUploader" type="file" name="img" accept='image/' enctype="multipart/form-data" multiple="multiple" required autofocus>
+                <div class="col-sm-6">
+                    <input id="fileUploader" type="file" name="img" accept='image/' enctype="multipart/form-data" multiple="multiple" required autofocus>
+                </div>
             </div>
             <!--　登録ボタン -->
             <div class="form-group">
@@ -55,8 +57,9 @@
                     <tbody>
                         @foreach ($posts as $post)
                             <tr>
+                                <!-- 画像 -->
                                 <td class="table-text">
-                                    <div>{{ $post->img_url }}</div>
+                                    <img src="/uploads/{{ $post->img_url }}">
                                 </td>
                                 <!-- 投稿タイトル -->
                                 <td class="table-text">
@@ -66,9 +69,9 @@
                                 <td class="table-text">
                                     <div>{{ $post->post_desc }}</div>
                                 </td>
-                                 <!--名前 -->
+                                <!-- 投稿者名の表示 -->
                                 <td class="table-text">
-                                   <div>{{ $post->user->name }}</div>
+                                    <div>{{ $post->user->name }}</div>
                                 </td>
                                 <!-- 詳細ボタン -->
                                 <td class="table-text">

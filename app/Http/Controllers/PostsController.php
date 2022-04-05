@@ -45,6 +45,13 @@ class PostsController extends Controller
             ]);
             
         }
+        
+        //画像アップローダー表示
+        $posts = Auth::user();
+    
+        return view('img_upload',[
+        'post'=>$post
+        ]);
        
     }
 
@@ -83,6 +90,7 @@ class PostsController extends Controller
         $posts = new Post;
         $posts->post_title = $request->post_title;
         $posts->post_desc = $request->post_desc;
+        $posts->img_url = $request->img_url;
         $posts->user_id = Auth::id();//ここでログインしているユーザidを登録しています
         $posts->save();
         
@@ -138,4 +146,49 @@ class PostsController extends Controller
     {
         //
     }
+    
+    // 画像アップロード処理
+    public function upload(Request $request){
+
+       // バリデーション 
+        $validator = $request->validate( [
+            'img' => 'required|file|image|max:2048', 
+        ]);
+    
+        // 画像ファイル取得
+        $file = $request->img;
+    
+        // ログインユーザー取得
+        $user = Auth::user();
+    
+        if ( !empty($file) ) {
+    
+            // ファイルの拡張子取得
+            $ext = $file->guessExtension();
+    
+            //ファイル名を生成
+            $fileName = Str::random(32).'.'.$ext;
+    
+            // 画像のファイル名を任意のDBに保存
+            $post->img_url = $fileName;
+            $post->save();
+    
+            //public/uploadフォルダを作成
+            $target_path = public_path('/uploads/');
+    
+            //ファイルをpublic/uploadフォルダに移動
+            $file->move($target_path,$fileName);
+    
+        }else{
+    
+            return redirect('/home');
+        }
+    
+        return redirect('/img');
+    
+    }
+    
+    
+    
 }
+

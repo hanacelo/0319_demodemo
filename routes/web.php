@@ -36,11 +36,12 @@ Route::get('/show/{id}', [PostsController::class, 'show'])->name('show');
 //お気に入りの処理
 Route::post('post/{post_id}', [PostsController::class, 'favo']);
 
+//多分いらない
 //画像アップロード画面表示
 Route::get('/img', [ImgController::class, 'index']);
 
 //画像アップロード処理
-Route::post('/img/upload',[ImgController::class, 'upload']);
+Route::post('/img/upload',[ImgController::class, 'upload'])->name('upload');
 
 
 
